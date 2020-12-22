@@ -1,18 +1,21 @@
 (function(){
 	"use strict"
-	var usuario = 'marco.antonio.fulltime@gmail.com';
-	$.getJSON(
-		'https://ceep.herokuapp.com/cartoes/carregar?callback=?',
-		{usuario: usuario},
-		function(res){
-			console.log(res.cartoes.length + " carregados em " + res.usuario);
-			res.cartoes.forEach(function(cartao){
-				controladorDeCartoes.adicionaCartao(cartao.conteudo, cartao.cor);
-			});
 
-			$(document).trigger("precisaSincronizar");
-		}
-	);
+	var usuario = "marco.antonio.fulltime@gmail.com";
+
+	$(document).on("carrega", function(){
+		$.getJSON(
+			"https://ceep.herokuapp.com/cartoes/carregar?callback=?",
+			{usuario: localStorage.getItem("usuario")},
+			function(res){
+				res.cartoes.forEach(function(cartao){
+					controladorDeCartoes.adicionaCartao(cartao.conteudo, cartao.cor);
+				});
+
+				$(document).trigger("precisaSincronizar");
+			}
+		);
+	})
 
 	$("#sync").click(function(){
 		$(document).trigger("precisaSincronizar");
@@ -35,12 +38,12 @@
 		});
 
 		var mural = {
-			 usuario: usuario
+			 usuario: localStorage.getItem("usuario")
 			,cartoes: cartoes
 		}
 
 		$.ajax({
-			 url: "https://ceep.herokuapp.com/cartoes/salvar?callback=?"
+			 url: "https://ceep.herokuapp.com/cartoes/salvar"
 			,method: "POST"
 			,data: mural
 			,success: function(res){
@@ -58,4 +61,16 @@
 			}
 		});
 	});
+
+	function pegaUsuario(){
+		return localStorage.getItem("usuario");
+	}
+
+	function estaLogado(){
+		if(pegaUsuario()) {
+			return true;
+		}
+		return false;
+	}
+
 })();

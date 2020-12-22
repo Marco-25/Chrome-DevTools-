@@ -47,8 +47,7 @@ var criaOpcoesDoCartao = (function(){
 	}
 
 	function removeCartao(){
-		var idDoCartao = this.dataset.id;
-		var cartao = document.querySelector("#cartao_" + idDoCartao);
+		var cartao = document.querySelector("#cartao_" + this.dataset.id);
 		cartao.classList.add("cartao--some");
 		setTimeout(function(){
 			cartao.remove();
