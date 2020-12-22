@@ -1,8 +1,8 @@
 (function(){
 	"use strict"
-
+	var usuario = 'marco.antonio.fulltime@gmail.com';
 	$.getJSON(
-		"https://ceep.herokuapp.com/cartoes/carregar",
+		'https://ceep.herokuapp.com/cartoes/carregar?callback=?',
 		{usuario: usuario},
 		function(res){
 			console.log(res.cartoes.length + " carregados em " + res.usuario);
@@ -40,7 +40,7 @@
 		}
 
 		$.ajax({
-			 url: "https://ceep.herokuapp.com/cartoes/salvar"
+			 url: "https://ceep.herokuapp.com/cartoes/salvar?callback=?"
 			,method: "POST"
 			,data: mural
 			,success: function(res){
